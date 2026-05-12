@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Serie;
+use App\Models\Series;
 use Illuminate\Http\Request;
+use App\Http\Requests\SeriesFromRequest;
 use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
 {
     public function index(Request $request)
     {
-        $series = Serie::query()->orderBy('name')->get();
+        $series = Series::all();
         $messagemSucesso = session('message.sucesso');
 
         return view('series.index')->with('series', $series)
@@ -22,15 +23,16 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(Request $request)
+    public function store(SeriesFromRequest $request)
     {
-        $serie = Serie::create($request->all());
+        
+        $serie = Series::create($request->all());
 
         return to_route('series.index')
         ->with('message.sucesso', "Série '{$serie->name}' adicionada com sucesso!");
     }
 
-    public function destroy(Serie $series)
+    public function destroy(Series $series)
     {
         $series->delete();
 
@@ -38,12 +40,12 @@ class SeriesController extends Controller
         ->with('message.sucesso', "Série '{$series->name}' removida com sucesso!");
     }
 
-    public function edit(Serie $series)
+    public function edit(Series $series)
     {
         return view('series.edit')->with('series', $series);
     }
 
-    public function update(Request $request, Serie $series)
+    public function update(SeriesFromRequest $request, Series $series)
     {
         $series->update($request->all());
 
