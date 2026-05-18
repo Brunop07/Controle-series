@@ -28,11 +28,19 @@ class SeriesFromRequest extends FormRequest
     }
 
         public function messages(): array
-        {
-            return [
-                'name.required' => 'O campo nome é obrigatório.',
-                'name.min' => 'O campo nome deve conter no mínimo :min caracteres.',
-                'name.max' => 'O campo nome deve conter no máximo :max caracteres.'
-            ];
-        }       
+{
+    return [
+        'name.required' => 'O campo nome é obrigatório.',
+        'name.min' => 'O campo nome deve conter no mínimo :min caracteres.',
+        'name.max' => 'O campo nome deve conter no máximo :max caracteres.',
+
+        'seasonsQty.required' => 'Informe o número de temporadas.',
+        'seasonsQty.integer' => 'Temporadas deve ser um número.',
+        'seasonsQty.min' => 'Deve ter pelo menos 1 temporada.',
+
+        'episodesPerSeason.required' => 'Informe os episódios por temporada.',
+        'episodesPerSeason.integer' => 'Episódios deve ser um número.',
+        'episodesPerSeason.min' => 'Deve ter pelo menos 1 episódio.',
+    ];
+}
 }

@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Series;
 use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFromRequest;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\SeriesRepository;
+
 
 class SeriesController extends Controller
 {
+
+    public function __construct(
+        private SeriesRepository $repository
+        )
+    {
+
+    }
+
     public function index(Request $request)
     {
         $series = Series::all();
@@ -25,17 +35,15 @@ class SeriesController extends Controller
 
     public function store(SeriesFromRequest $request)
     {
-        
-        $serie = Series::create($request->all());
-
+        $serie = $this->repository->add($request);
         return to_route('series.index')
         ->with('message.sucesso', "Série '{$serie->name}' adicionada com sucesso!");
     }
 
     public function destroy(Series $series)
     {
-        $series->delete();
-
+        $series->delete($series->id);
+    
         return to_route('series.index')
         ->with('message.sucesso', "Série '{$series->name}' removida com sucesso!");
     }
