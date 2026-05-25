@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Season;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\Request;
+use App\Models\Episode;
 
 class EpisodesController extends Controller
 {
@@ -12,7 +13,20 @@ class EpisodesController extends Controller
     {
         return view('episodes.index', [
             'episodes' => $season->episodes,
-            'season' => $season
+            'mensagemSucesso' => session('mensagem.sucesso')
         ]);
+    }
+
+    public function update(Request $request, Season $season)
+    {
+        $watchedEpisodes = $request->episodes;
+        $season->episodes->each(function (Episode $episode) use ($watchedEpisodes) {
+            $episode->watched = in_array($episode->id, $watchedEpisodes);
+        });
+
+        $season->push();
+
+        return to_route('seasons.index', $season->id)
+            ->with('mensagem.sucesso', 'Episódios marcados como assistidos');
     }
 }
