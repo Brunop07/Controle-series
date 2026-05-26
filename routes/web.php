@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EpisodesController;
 use App\Http\Middleware\Autenticador;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UsersController;
 
 Route::get('/', function () {
     return view('series.index');
@@ -31,8 +32,13 @@ Route::post('/seasons/{season}/episodes', function (\Illuminate\Http\Request $re
     return redirect()->route('seasons.index', $season->series_id);
 })->name('episodes.update');
 
-Route::get('/login', [LoginController::class, 'index'])
-    ->name('login.index');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 
-Route::post('/login', [LoginController::class, 'store'])
-    ->name('login.store');
+
+Route::get('/register',[UsersController::class, 'create'])
+    ->name('users.create');
+
+Route::post('/register',[UsersController::class, 'store'])
+    ->name('users.store');    
