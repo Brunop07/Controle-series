@@ -7,16 +7,14 @@ use App\Models\Series;
 use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFromRequest;
 use App\Repositories\SeriesRepository;
-
+use App\Http\Controllers\Controller;
 
 class SeriesController extends Controller
 {
 
-    public function __construct(
-        private SeriesRepository $repository
-        )
+    public function __construct(private SeriesRepository $repository)
     {
-
+        
     }
 
     public function index(Request $request)
@@ -58,6 +56,6 @@ class SeriesController extends Controller
         $series->update($request->all());
 
         return to_route('series.index')
-        ->with('mensage.sucesso', "Série '{$series->name}' atualizada com sucesso!");
+        ->with('mensagem.sucesso', "Série '{$series->name}' atualizada com sucesso!");
     }
 }    

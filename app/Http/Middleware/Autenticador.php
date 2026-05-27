@@ -16,10 +16,11 @@ class Autenticador
      * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        if (!Auth::check()) {
-            throw new AuthenticationException('Usuário não autenticado.');
-        }
-        return $next($request);
+{
+    if (!Auth::check()) {
+        return redirect()->route('login');
     }
+
+    return $next($request);
+}
 }
