@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFromRequest;
 use App\Repositories\SeriesRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SeriesCreated;
 
 class SeriesController extends Controller
 {
@@ -34,6 +36,16 @@ class SeriesController extends Controller
     public function store(SeriesFromRequest $request)
     {
         $serie = $this->repository->add($request);
+
+        $email = new  SeriesCreated(
+            $serie->name,
+            $serie->id,
+            $serie->seasonsQty,
+            $serie->episodesPerSeason,
+        );
+
+        Mail::to($request->user())->send($email);
+
         return to_route('series.index')
         ->with('mensagem.sucesso', "Série '{$serie->name}' adicionada com sucesso!");
     }
