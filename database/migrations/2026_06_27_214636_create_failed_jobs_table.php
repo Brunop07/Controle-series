@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        / Verifica se a tabela NÃO existe antes de tentar criá-la
+        // Verifica se a tabela NÃO existe antes de tentar criá-la
         if (!Schema::hasTable('failed_jobs')) {
             Schema::create('failed_jobs', function (Blueprint $table) {
                 $table->id();
