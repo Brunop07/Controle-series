@@ -34,7 +34,8 @@
     30 => 'App\\Providers\\AppServiceProvider',
     31 => 'App\\Providers\\SeriesRepositoryProvider',
     32 => 'App\\Providers\\AppServiceProvider',
-    33 => 'App\\Providers\\SeriesRepositoryProvider',
+    33 => 'App\\Providers\\EventServiceProvider',
+    34 => 'App\\Providers\\SeriesRepositoryProvider',
   ),
   'eager' => 
   array (
@@ -57,7 +58,8 @@
     16 => 'App\\Providers\\AppServiceProvider',
     17 => 'App\\Providers\\SeriesRepositoryProvider',
     18 => 'App\\Providers\\AppServiceProvider',
-    19 => 'App\\Providers\\SeriesRepositoryProvider',
+    19 => 'App\\Providers\\EventServiceProvider',
+    20 => 'App\\Providers\\SeriesRepositoryProvider',
   ),
   'deferred' => 
   array (

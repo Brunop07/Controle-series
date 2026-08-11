@@ -36,20 +36,16 @@ class SeriesController extends Controller
 
     public function store(SeriesFromRequest $request)
     {
+        $coverPath = $request->file('cover')->store('series_covers', 'public');
+        $request->merge(['cover' => $coverPath]);
         $serie = $this->repository->add($request);
-        
-        $userList = User::all();
-    foreach ($userList as $user) {   
-        $email = new  SeriesCreated(
+        \App\Events\SeriesCreated::dispatch(
             $serie->name,
             $serie->id,
-            $serie->seasonsQty,
-            $serie->episodesPerSeason,
+            $request->seasonsQty,
+            $request->episodesPerSeason
         );
 
-        Mail::to($request->user())->queue($email);
-        
-    }
         return to_route('series.index')
         ->with('mensagem.sucesso', "Série '{$serie->name}' adicionada com sucesso!");
     }

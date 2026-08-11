@@ -12,7 +12,8 @@ class Series extends Model
    protected $fillable = [
     'name',
     'seasonsQty',
-    'episodesPerSeason'
+    'episodesPerSeason',
+    'cover'
    ];
    
     public function seasons()
